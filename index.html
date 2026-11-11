@@ -223,7 +223,7 @@ function syncInit(){window.addEventListener("online",()=>sync());document.addEve
 function syHtml(){const lk=!!SY.rt;return `<h2>Sincronizzazione</h2><div class="card"><span class="mu" style="margin-bottom:8px">${lk?"Collegato come "+esc(SY.email||""):"Non collegato: i dati restano solo su questo dispositivo."}</span><div class="row">${lk?'<button class="b sm" onclick="sync()">Sincronizza ora</button><button class="b g sm" onclick="syOut()">Scollega</button>':'<button class="b sm" onclick="syForm()">Collega</button>'}</div></div>`}
 function syForm(){const c=syCfg();ask("Collega a Supabase",[{k:"url",l:"Project URL",v:c.url},{k:"anon",l:"Chiave anon (public)",v:c.anon},{k:"email",l:"Email",t:"email",v:SY.email||""},{k:"pw",l:"Password",t:"password",v:""}],v=>{
 if(!v.url||!v.anon||!v.email||!v.pw)return toast("Compila tutti i campi")||false;SY.url=v.url.trim();SY.anon=v.anon.trim();SY.base=null;sySave();
-(async()=>{try{await syLogin(v.email.trim(),v.pw);syShow("⟳ collegato");sync();render()}catch(e){toast("Accesso non riuscito");syShow("non collegato")}})()},null,"Collega")}
+(async()=>{try{await syLogin(v.email.trim(),v.pw);syShow("⟳ collegato");sync();render()}catch(e){const m="Accesso non riuscito: "+String(e.message).slice(0,160);toast(m);syShow(m)}})()},null,"Collega")}
 function syOut(){SY={url:SY.url,anon:SY.anon};sySave();syShow("non collegato");render()}
 /*END*/
 let st="m";
