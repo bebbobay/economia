@@ -53,7 +53,7 @@ dialog::backdrop{background:#0007}dialog h3{margin:0 0 12px}
 <button class="b" id="fab" onclick="txForm({})">+</button>
 <nav id="nav"></nav><dialog id="dlg"></dialog><div id="toast"></div>
 <script>
-const KEY="economia-v2",$=i=>document.getElementById(i);
+const VER="1.1",KEY="economia-v2",$=i=>document.getElementById(i);
 const uid=()=>Math.random().toString(36).slice(2,9);
 const today=()=>new Date().toLocaleDateString("sv-SE");
 const E=n=>new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"}).format(n||0);
@@ -61,7 +61,7 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
 const TYPES={out:"Uscita",in:"Entrata",tr:"Trasferimento",sw:"Scambio"};
 function seed(){const n="VARIE,SALUTE,MUTUO,CONDOMINIO,TARI,LUCE+RAI,GAS,TELEFONO,CELLULARE,ACQUA,ALLEANZA,NETFLIX/PRIME,ASILO,JW,ISA,ALE,CONAD,LIDL,TODIS,A&S,SPESA,SVAGO,VESTITI,BMW,ALFA,MOTO,DIESEL,TELEPASS,VACANZE,ROBY,TABY,SPORT,KIT EMERGENZA,FONDO,ARIAS".split(",");
-return{accounts:[{id:"a1",name:"C.C. 1",open:19519.35,color:"#8fd3f4"},{id:"a2",name:"C.C. 2",open:16.44,color:"#c7e8a9"},{id:"a3",name:"Cash",open:0,color:"#ffd08a"}],cdcs:n.map(x=>({id:uid(),name:x})),txs:[]}}
+return{accounts:[{id:"a1",name:"C.C. 1",open:0,color:"#8fd3f4"},{id:"a2",name:"C.C. 2",open:0,color:"#c7e8a9"},{id:"a3",name:"Cash",open:0,color:"#ffd08a"}],cdcs:n.map(x=>({id:uid(),name:x})),txs:[]}}
 let S=(()=>{try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return seed()})();
 S.plans=S.plans||[];S.pm=S.pm||{};
 let tab="r",flt="";
@@ -232,7 +232,7 @@ function applyTheme(){S.theme?document.documentElement.setAttribute("data-theme"
 function cdcHist(id){F={t:[],a:[],c:[id],from:"",to:"",min:"",max:"",q:"",open:true};flt="";tab="s";st="m";render();window.scrollTo(0,0)}
 function snav(){return `<div class="row" style="flex-wrap:wrap;margin:10px 0">${[["m","Storico"],["c","Conti"],["d","Cdc"],["b","Altro"]].map(x=>`<button class="b ${st==x[0]?"":"g "}sm" onclick="st='${x[0]}';render()">${x[1]}</button>`).join("")}</div>`}
 function setHtml(){const th=(v,t)=>`<button class="b ${(S.theme||"")==v?"":"g "}sm" onclick="S.theme='${v}';applyTheme();upd()">${t}</button>`;
-return `<h2>Aspetto</h2><div class="row">${th("","Automatico")}${th("light","Chiaro")}${th("dark","Scuro")}</div><h2>Dati</h2><div class="card"><span class="mu" style="margin-bottom:8px">Copia o ripristina tutti i dati.</span><button class="b sm" onclick="backup()">Backup / Ripristina</button></div>${syHtml()}`}
+return `<h2>Aspetto</h2><div class="row">${th("","Automatico")}${th("light","Chiaro")}${th("dark","Scuro")}</div><h2>Dati</h2><div class="card"><span class="mu" style="margin-bottom:8px">Copia o ripristina tutti i dati.</span><button class="b sm" onclick="backup()">Backup / Ripristina</button></div>${syHtml()}<h2>Versione</h2><div class="card"><span class="mu">App versione <b>${VER}</b></span></div>`}
 function txRow(t){const N=x=>nm(S.accounts,x),s=t.type=="in"?1:t.type=="out"?-1:0,w=t.type=="in"?N(t.acc):t.type=="out"?N(t.acc)+" · "+nc(t.cdc):t.type=="tr"?`${N(t.acc)} · ${nc(t.cdc)} → ${N(t.acc2)} · ${nc(t.cdc2)}`:`${N(t.acc)} · ${nc(t.cdc)} ⇄ ${N(t.acc2)} · ${nc(t.cdc2)}`;
 return `<div class="li" onclick="editTx('${t.id}')"><span>${esc(t.desc||LAB[ty2(t)])}<small>${t.date} · ${LAB[ty2(t)]} · ${esc(w)}</small></span><b class="${s<0?"ng":s>0?"ok":""}">${s<0?"−":s>0?"+":""}${E(t.amt)}</b></div>`}
 function render(){const k=calc();let h="";const T=tab=="s"?st:tab=="i"||tab=="o"?"p":tab;
