@@ -53,14 +53,14 @@ dialog::backdrop{background:#0007}dialog h3{margin:0 0 12px}
 <button class="b" id="fab" onclick="txForm({})">+</button>
 <nav id="nav"></nav><dialog id="dlg"></dialog><div id="toast"></div>
 <script>
-const VER="1.1",KEY="economia-v2",$=i=>document.getElementById(i);
+const VER="1.2",KEY="economia-v2",$=i=>document.getElementById(i);
 const uid=()=>Math.random().toString(36).slice(2,9);
 const today=()=>new Date().toLocaleDateString("sv-SE");
 const E=n=>new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"}).format(n||0);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
 const TYPES={out:"Uscita",in:"Entrata",tr:"Trasferimento",sw:"Scambio"};
-function seed(){const n="VARIE,SALUTE,MUTUO,CONDOMINIO,TARI,LUCE+RAI,GAS,TELEFONO,CELLULARE,ACQUA,ALLEANZA,NETFLIX/PRIME,ASILO,JW,ISA,ALE,CONAD,LIDL,TODIS,A&S,SPESA,SVAGO,VESTITI,BMW,ALFA,MOTO,DIESEL,TELEPASS,VACANZE,ROBY,TABY,SPORT,KIT EMERGENZA,FONDO,ARIAS".split(",");
+function seed(){const n=[];
 return{accounts:[{id:"a1",name:"C.C. 1",open:0,color:"#8fd3f4"},{id:"a2",name:"C.C. 2",open:0,color:"#c7e8a9"},{id:"a3",name:"Cash",open:0,color:"#ffd08a"}],cdcs:n.map(x=>({id:uid(),name:x})),txs:[]}}
 let S=(()=>{try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return seed()})();
 S.plans=S.plans||[];S.pm=S.pm||{};
