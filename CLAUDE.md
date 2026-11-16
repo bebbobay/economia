@@ -7,6 +7,7 @@ App personale (un solo utente, interfaccia in italiano) per gestire l'economia d
 - Non cambiare le regole sui dati senza chiedere. Dichiara le ipotesi. Non dire "fatto" prima di aver controllato (almeno `node --check` sullo script).
 - Passi piccoli e verificabili. Dopo ogni modifica dì all'utente cosa guardare.
 - Lavora su un branch e apri una pull request; il sito si aggiorna quando la PR viene unita in `main`.
+- **Versione:** a ogni aggiornamento alza `VER` in `index.html` e `C` in `sw.js` allo stesso numero (es. 1.2) e aggiungi una voce in `CHANGELOG.md`.
 
 ## Struttura del repository
 - `index.html`: l'intera app (HTML + CSS + JavaScript puro, un solo file, senza build né librerie). Lo script ha un blocco di sincronizzazione tra i marcatori `/*SYNC*/` e `/*END*/`.
