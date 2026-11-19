@@ -4,6 +4,7 @@
 - Accantonamenti: la quota non si somma più da sola alle matrici. È un suggerimento; il pulsante **Scrivi nella matrice** la copia negli In (e i pagamenti negli Out) per i mesi scelti, sostituendo i valori di quel cdc.
 - Per ogni busta: avviso se la matrice è diversa dal suggerito nei prossimi 12 mesi.
 - La simulazione mostra il saldo della busta "se applichi" la quota.
+- Frequenza in **mesi** (12 = ogni anno, 13, 24, 6…) con la data del **prossimo pagamento**; le spese già inserite vengono convertite in automatico.
 
 ## 1.3 (novembre 2026)
 - Nuova pagina **In → Accantonamenti**: spese periodiche (assicurazione, bollo, gomme…) con quota mensile calcolata (importo ÷ anni ÷ 12, sommata per busta e arrotondata ai 5 € in su).
