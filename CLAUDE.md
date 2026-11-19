@@ -29,7 +29,7 @@ App personale (un solo utente, interfaccia in italiano) per gestire l'economia d
 - Tutti i saldi sono **derivati** da `calc()`: nessun saldo viene memorizzato. Libero = saldo conto − somma delle quote dei cdc nel conto.
 - Regole: **conti e Libero non possono andare negativi** (`neg()` blocca il salvataggio), **i cdc sì**. Nel trasferimento il campo "A cdc" non ammette Libero: per disallocare si modifica o si elimina il movimento di allocazione.
 - `pm["AAAA-MM"]["alloc|conto|cdc" oppure "out|conto|cdc"] = importo`: previsioni. Il tab In usa le allocazioni, il tab Out le uscite.
-- `acc[{id,name,acc,cdc,amt,every,month,next,from}]`: **Accantonamenti** (In → Accantonamenti). Quota mensile = somma per conto|cdc di amt/(every·12), arrotondata ai 5 € in su (`ceil5`), conteggiata dai mesi ≥ `from`. Pagamento previsto nel mese `month` (1-12, "" = senza mese fisso) negli anni `next + k·every`. Non viene scritto in `pm`: `accPlan(mo)` lo calcola e `pval(mo,chiave)` = `pm` manuale + accantonamenti (si sommano, decisione dell'utente). Nelle matrici l'input resta il valore manuale, con "+quota" sotto.
+- `acc[{id,name,acc,cdc,amt,every,month,next,from}]`: **Accantonamenti** (In → Accantonamenti). Quota mensile = somma per conto|cdc di amt/(every·12), arrotondata ai 5 € in su (`ceil5`), conteggiata dai mesi ≥ `from`. Pagamento previsto nel mese `month` (1-12, "" = senza mese fisso) negli anni `next + k·every`. È solo un **suggerimento** (`accPlan(mo)`, cache `ap`): entra in `pm` solo col pulsante "Scrivi nella matrice" (`accWrite`), che per quel conto|cdc nei mesi scelti sostituisce alloc e out con i valori suggeriti. `pval(mo,chiave)` = solo `pm`. (In 1.3 si sommavano: tolto in 1.4 su richiesta dell'utente perché creava doppioni.) La simulazione a 24 mesi mostra il saldo "se applichi".
 - `plans` (vecchie regole) non è più usato. `theme`: "", "light" o "dark".
 
 ## Schermate
@@ -41,7 +41,7 @@ Colori di stato: Diff. = 0 verde, > 0 giallo, < 0 rosso; Eff. = Prev. verde, mag
 `fetch` diretto alle API REST di Supabase (senza libreria). Login con email e password dell'unico utente. Un solo documento `app_state(user_id, data jsonb, version)` per utente, con aggiornamento condizionato sulla versione e **unione a tre vie per id** (`mrg()`) tra base locale, stato locale e stato remoto. La base sta in localStorage `economia-sync`. È stata provata con un server simulato e poi in uso reale con Supabase (PC e telefono).
 
 ## Da fare
-1. Pagina **Accantonamenti**: spese annuali (assicurazione, bollo, gomme…) con quota mensile calcolata in automatico che riempie la matrice (sostituisce il vecchio foglio Excel di calcolo auto/moto, da rifare per tutti i cdc).
+1. ~~Accantonamenti~~ (fatto in 1.3/1.4). **Verificare i dati importati dall'Excel**: il residuo 2025 dei cdc risulta registrato come allocazione di gennaio 2026 (es. BMW CC1 Eff. gennaio 483,19 invece di 220).
 2. **Entrate previste** (stipendio) per completare la previsione di fine mese.
 3. Formato data e valuta, grafici, movimenti ricorrenti, importazione CSV dell'estratto conto.
 4. Messaggi d'errore di sincronizzazione più chiari.
