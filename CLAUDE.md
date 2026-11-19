@@ -29,6 +29,7 @@ App personale (un solo utente, interfaccia in italiano) per gestire l'economia d
 - Tutti i saldi sono **derivati** da `calc()`: nessun saldo viene memorizzato. Libero = saldo conto − somma delle quote dei cdc nel conto.
 - Regole: **conti e Libero non possono andare negativi** (`neg()` blocca il salvataggio), **i cdc sì**. Nel trasferimento il campo "A cdc" non ammette Libero: per disallocare si modifica o si elimina il movimento di allocazione.
 - `pm["AAAA-MM"]["alloc|conto|cdc" oppure "out|conto|cdc"] = importo`: previsioni. Il tab In usa le allocazioni, il tab Out le uscite.
+- `acc[{id,name,acc,cdc,amt,every,month,next,from}]`: **Accantonamenti** (In → Accantonamenti). Quota mensile = somma per conto|cdc di amt/(every·12), arrotondata ai 5 € in su (`ceil5`), conteggiata dai mesi ≥ `from`. Pagamento previsto nel mese `month` (1-12, "" = senza mese fisso) negli anni `next + k·every`. Non viene scritto in `pm`: `accPlan(mo)` lo calcola e `pval(mo,chiave)` = `pm` manuale + accantonamenti (si sommano, decisione dell'utente). Nelle matrici l'input resta il valore manuale, con "+quota" sotto.
 - `plans` (vecchie regole) non è più usato. `theme`: "", "light" o "dark".
 
 ## Schermate
